@@ -167,11 +167,11 @@ abstract class Connection
     protected $_remote        = false;
 
     /**
-     * Remote address.
+     * List of Remote address when selecting.
      *
-     * @var \Hoa\Socket\Connection string
+     * @var \Hoa\Socket\Connection array
      */
-    protected $_remoteAddress = null;
+    protected $_remotesAddress = array();
 
     /**
      * List of Encryption when selecting.
@@ -385,6 +385,9 @@ abstract class Connection
     public function disconnect ( ) {
 
         $streamID = (int)$this->getStream();
+
+        if(isset($this->_remotesAddress[$streamID]))
+            unset($this->_remotesAddress[$streamID]);
 
         if(isset($this->_encryptions[$streamID]))
             unset($this->_encryptions[$streamID]);
@@ -676,7 +679,13 @@ abstract class Connection
      */
     public function getRemoteAddress ( ) {
 
-        return $this->_remoteAddress;
+        $stream = $this->getStream();
+        $streamID = (int)$stream;
+
+        if(!isset($this->_remotesAddress[$streamID]))
+            $this->_remotesAddress[$streamID] = stream_socket_get_name($stream, true);
+
+        return $this->_remotesAddress[$streamID];
     }
 
     /**
@@ -712,7 +721,6 @@ abstract class Connection
             0,
             $address
         );
-        $this->_remoteAddress = !empty($address) ? $address : null;
 
         return $out;
     }
