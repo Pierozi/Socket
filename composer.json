@@ -23,7 +23,8 @@
     },
     "require": {
         "hoa/core"  : "dev-master",
-        "hoa/stream": "dev-master"
+        "hoa/stream": "dev-master",
+	"hoa/console": "dev-master"
     },
     "minimum-stability": "dev",
     "target-dir"       : "Hoa/Socket",
