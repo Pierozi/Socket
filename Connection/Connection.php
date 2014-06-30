@@ -167,20 +167,6 @@ abstract class Connection
     protected $_remote        = false;
 
     /**
-     * Remote address.
-     *
-     * @var \Hoa\Socket\Connection string
-     */
-    protected $_remoteAddress = null;
-
-    /**
-     * List of Encryption when selecting.
-     *
-     * @var \Hoa\Socket\Connection array
-     */
-    protected $_encryptions    = array();
-
-    /**
      * Temporize selected connections when selecting.
      *
      * @var \Hoa\Socket\Server array
@@ -384,11 +370,6 @@ abstract class Connection
      */
     public function disconnect ( ) {
 
-        $streamID = (int)$this->getStream();
-
-        if(isset($this->_encryptions[$streamID]))
-            unset($this->_encryptions[$streamID]);
-
         $this->_disconnect = $this->close();
 
         return;
@@ -498,8 +479,7 @@ abstract class Connection
     public function setEncryption ( $enable, $type = null,
                                     $sessionStream = null ) {
 
-        $streamID = (int)$this->getStream();
-        $this->_encryptions[$streamID] = $enable ? $type : false;
+        $this->getCurrentNode()->_setEncryption($enable ? $type : false);
 
         if(null === $type)
             return stream_socket_enable_crypto($this->getStream(), $enable);
@@ -527,12 +507,7 @@ abstract class Connection
      */
     public function getEncryption ( ) {
 
-        $streamID = (int)$this->getStream();
-
-        if (empty($this->_encryptions[$streamID]))
-            return false;
-
-        return $this->_encryptions[$streamID];
+        return $this->getCurrentNode()->_getEncryption();
     }
 
     /**
