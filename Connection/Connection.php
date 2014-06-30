@@ -167,6 +167,13 @@ abstract class Connection
     protected $_remote        = false;
 
     /**
+     * Remote address.
+     *
+     * @var \Hoa\Socket\Connection string
+     */
+    protected $_remoteAddress = null;
+
+    /**
      * Temporize selected connections when selecting.
      *
      * @var \Hoa\Socket\Server array
