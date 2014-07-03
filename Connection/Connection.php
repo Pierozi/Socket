@@ -483,10 +483,10 @@ abstract class Connection
      *                                        this session stream.
      * @return  bool
      */
-    public function setEncryption ( $enable, $type = null,
+    public function enableEncryption ( $enable, $type = null,
                                     $sessionStream = null ) {
 
-        $this->getCurrentNode()->setEncrypted($enable ? $type : false);
+        $this->getCurrentNode()->setEncryptionType($enable ? $type : null);
 
         if(null === $type)
             return stream_socket_enable_crypto($this->getStream(), $enable);
@@ -514,7 +514,7 @@ abstract class Connection
      */
     public function getEncryption ( ) {
 
-        return $this->getCurrentNode()->getEncrypted();
+        return $this->getCurrentNode()->getEncryptionType();
     }
 
     /**
