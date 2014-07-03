@@ -137,7 +137,7 @@ class Node {
      */
     public function getEncryptionType ( ) {
 
-        return $this->_encrypted;
+        return $this->_encryptionType;
     }
 
     /**
