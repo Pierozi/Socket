@@ -691,7 +691,7 @@ abstract class Connection
             throw new \Hoa\Socket\Exception(
                 'Length must be greater than 0, given %d.', 1, $length);
 
-        if(false !== $this->getEncryptionType())
+        if(null !== $this->getEncryptionType())
             return fread($this->getStream(), $length);
 
         if(false === $this->isRemoteAddressConsidered())
@@ -787,7 +787,7 @@ abstract class Connection
      */
     public function readLine ( ) {
 
-        if(false !== $this->getEncryptionType())
+        if(null !== $this->getEncryptionType())
             return rtrim(fgets($this->getStream(), 1 << 15), "\n");
 
         return stream_get_line($this->getStream(), 1 << 15, "\n");
@@ -840,7 +840,7 @@ abstract class Connection
         if(strlen($string) > $length)
             $string = substr($string, 0, $length);
 
-        if(false !== $this->getEncryptionType())
+        if(null !== $this->getEncryptionType())
             $out = fwrite($this->getStream(), $string, $length);
         else {
 
