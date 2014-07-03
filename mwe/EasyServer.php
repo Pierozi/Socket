@@ -95,8 +95,8 @@ class EasyServer
         $NodeConnection = $Node->getConnection();
         echo "Connection from [" . $Node->getPeerName() . "|". $NodeConnection->getRemoteAddress() ."]\n";
 
-        if ($isCrypted && !$NodeConnection->getEncryption())
-            $NodeConnection->setEncryption(true, \Hoa\Socket\Server::ENCRYPTION_TLS);
+        if ($isCrypted && !$Node->getEncryptionType())
+            $NodeConnection->enableEncryption(true, \Hoa\Socket\Server::ENCRYPTION_TLS);
 
         $line = $NodeConnection->read(20);
         echo ' < ', $line, "\n";

@@ -30,7 +30,7 @@ class EasyClient
             $client->connect();
 
             if (self::MODE_CRYPTED === $mode)
-                $client->setEncryption(true, \Hoa\Socket\Client::ENCRYPTION_TLS);
+                $client->enableEncryption(true, \Hoa\Socket\Client::ENCRYPTION_TLS);
 
             if (false === $line || 'quit' === $line)
                 break;
