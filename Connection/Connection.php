@@ -486,10 +486,8 @@ abstract class Connection
     public function enableEncryption ( $enable, $type = null,
                                     $sessionStream = null ) {
 
-        if($type)
-            $this->getCurrentNode()->setEncryptionType($type);
-        else
-            $type = $this->getCurrentNode()->getEncryptionType();
+        $type && $this->getCurrentNode()->setEncryptionType($type);
+        $type = $type ?: $this->getCurrentNode()->getEncryptionType();
 
         if(null === $type)
             return stream_socket_enable_crypto($this->getStream(), $enable);
